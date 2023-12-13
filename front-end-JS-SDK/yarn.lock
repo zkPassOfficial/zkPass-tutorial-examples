@@ -321,6 +321,13 @@
   resolved "https://registry.npmmirror.com/@ungap/structured-clone/-/structured-clone-1.2.0.tgz#756641adb587851b5ccb3e095daf27ae581c8406"
   integrity sha512-zuVdFrMJiuCDQUMCzQaD6KL28MjnqqN8XnAqiEq9PNm/hCPTSGfrXCOfwj1ow4LFb/tNymJPwsNbVePc1xFqrQ==
 
+"@zkpass/transgate-js-sdk@^0.1.0":
+  version "0.1.0"
+  resolved "https://registry.npmjs.org/@zkpass/transgate-js-sdk/-/transgate-js-sdk-0.1.0.tgz#d2a2ebec63a3ec1961f9755bc7d3344f69d07822"
+  integrity sha512-K60Z1q9z3VSUKuQDZSDYSQH9l2NqIE+3Nik7cmttDaYH9UfUsVFk5yllqYmPENLoiYQj/WvD020CVmI9E/h4Fw==
+  dependencies:
+    web3 "^4.2.2"
+
 abitype@0.7.1:
   version "0.7.1"
   resolved "https://registry.npmmirror.com/abitype/-/abitype-0.7.1.tgz#16db20abe67de80f6183cf75f3de1ff86453b745"
@@ -2173,13 +2180,6 @@ tr46@~0.0.3:
   version "0.0.3"
   resolved "https://registry.npmmirror.com/tr46/-/tr46-0.0.3.tgz#8184fd347dac9cdc185992f3a6622e14b9d9ab6a"
   integrity sha512-N3WMsuqV66lT30CrXNbEjx4GEwlow3v6rr4mCcv6prnfwhS01rkgyFdjPNBYd9br7LpXV1+Emh01fHnq2Gdgrw==
-
-transgate-js-sdk@^0.4.0:
-  version "0.4.0"
-  resolved "https://registry.yarnpkg.com/transgate-js-sdk/-/transgate-js-sdk-0.4.0.tgz#2157950584be8b6c378d51789f683b22ffbced11"
-  integrity sha512-i2mKO9sTLcwM0E54tQDeErXOTuKP+oA/OR8vTJoumtn3qA/MsMOupn2t0dhAzETaOdHxEwqhz13QTOTsegoTHw==
-  dependencies:
-    web3 "^4.2.2"
 
 ts-api-utils@^1.0.1:
   version "1.0.3"

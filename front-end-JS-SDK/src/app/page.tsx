@@ -1,7 +1,7 @@
 "use client"
 import { useState } from "react"
 import styles from "./page.module.css"
-import TransgateConnect from "transgate-js-sdk"
+import TransgateConnect from "@zkpass/transgate-js-sdk"
 import styled from "styled-components"
 import JSONPretty from "react-json-pretty"
 import { verifyMessageSignature } from "./helper"
