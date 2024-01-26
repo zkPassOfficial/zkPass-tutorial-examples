@@ -1,0 +1,44 @@
+{
+  "category": "Social",
+  "issuer": "Discord",
+  "desc": "App for creating communities with voice, video, and text communication channels.",
+  "website": "https://discord.com/channels/950858460122206228/956435918271692830",
+  "APIs": [
+    {
+      "host": "discord.com",
+      "intercept": {
+        "url": "api/v9/users/@me",
+        "method": "GET"
+      },
+      "nullifier": "id"
+    },
+    {
+      "host": "discord.com",
+      "intercept": {
+        "url": "api/v9/channels/?=?/messages",
+        "method": "GET"
+      },
+      "override": {
+        "url": "api/v9/channels/956435918271692830/messages",
+        "query": [
+          {
+            "limit": "1"
+          }
+        ]
+      },
+      "assert": [
+        {
+          "key": "0|channel_id",
+          "value": "956435918271692830",
+          "operation": "="
+        }
+      ]
+    }
+  ],
+  "HRCondition": [
+    "zkPass Community Member"
+  ],
+  "tips": {
+    "message": "When you successfully log in, please click on your Discord Avatar to initiate the verification process."
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "category": "Financial",
+  "issuer": "Binance",
+  "desc": "A global cryptocurrency exchange facilitating trading of a diverse array of digital currencies.",
+  "website": "https://www.binance.com/my/dashboard",
+  "APIs": [
+    {
+      "host": "www.binance.com",
+      "intercept": {
+        "url": "bapi/accounts/v1/private/account/user/base-detail",
+        "method": "POST"
+      },
+      "nullifier": "data|userId"
+    },
+    {
+      "host": "www.binance.com",
+      "intercept": {
+        "url": "bapi/composite/v2/private/marketing/wallet/userHistoryAssets",
+        "method": "POST"
+      },
+      "assert": [
+        {
+          "key": "data|6|total",
+          "value": "25.00000000",
+          "operation": ">"
+        }
+      ]
+    }
+  ],
+  "HRCondition": [
+    "Last 24 Hours Average Balance > 25 USDT"
+  ],
+  "tips": {
+    "message": "When you successfully log in, please click the 'Start' button to initiate the verification process."
+  }
+}

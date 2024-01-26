@@ -1,0 +1,40 @@
+{
+  "category": "Social",
+  "issuer": "Quora",
+  "desc": "The platform to ask questions and connect with people who contribute unique insights and quality answers.",
+  "website": "https://www.quora.com/stats",
+  "APIs": [
+    {
+      "host": "www.quora.com",
+      "intercept": {
+        "url": "graphql/gql_para_POST",
+        "method": "POST",
+        "query": [
+          {
+            "q": "UserStatsContentQuery",
+            "verify": true
+          }
+        ]
+      },
+      "assert": [
+        {
+          "key": "data|viewer|__typename",
+          "value": "Viewer",
+          "operation": "="
+        },
+        {
+          "key": "data|viewer|id",
+          "value": "0000000000000000",
+          "operation": "!="
+        }
+      ],
+      "nullifier": "data|viewer|uid"
+    }
+  ],
+  "HRCondition": [
+    "Quora Account Owner"
+  ],
+  "tips": {
+    "message": "When you successfully log in, please click the 'Start' button to initiate the verification process."
+  }
+}
