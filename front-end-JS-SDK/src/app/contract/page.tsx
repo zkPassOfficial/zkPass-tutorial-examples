@@ -106,7 +106,7 @@ export default function Home() {
       
       //Sepolia contract address
       //You can add from https://chainlist.org/?search=11155111&testnets=true
-      const contractAddress = "0x9eCD59B5D6Cea2A9441B5cEfAD5150c16F938703"      
+      const contractAddress = "0x8c18c0436A8d6ea44C87Bf5853F8D11B55CF0302"      
       
       const taskId = ethers.hexlify(ethers.toUtf8Bytes(res.taskId)) // to hex
       schemaId = ethers.hexlify(ethers.toUtf8Bytes(schemaId)) // to hex
