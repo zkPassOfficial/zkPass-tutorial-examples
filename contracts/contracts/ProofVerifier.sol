@@ -8,12 +8,13 @@ contract ProofVerifier {
 
     constructor() {}
 
-    function verify(Proof calldata _proof) external view returns (bool) {
+    function verify(Proof calldata _proof) public view returns (bool) {
         return (verifyAllocatorSignature(_proof.taskId, _proof.schemaId, _proof.validator, _proof.allocatorSignature) &&
             verifyValidatorSignature(
                 _proof.taskId,
                 _proof.schemaId,
                 _proof.uHash,
+                _proof.recipient,
                 _proof.publicFieldsHash,
                 _proof.validator,
                 _proof.validatorSignature
@@ -25,7 +26,7 @@ contract ProofVerifier {
         bytes32 _schemaId,
         address _validator,
         bytes calldata _allocatorSignature
-    ) internal view returns (bool) {
+    ) public view returns (bool) {
         bytes32 hashed = keccak256(abi.encode(_taskId, _schemaId, _validator));
         address allocator = recoverSigner(prefixed(hashed), _allocatorSignature);
 
@@ -36,21 +37,22 @@ contract ProofVerifier {
         bytes32 _taskId,
         bytes32 _schemaId,
         bytes32 _uHash,
+        address _recipient,
         bytes32 _publicFieldsHash,
         address _validator,
         bytes calldata _validatorSignature
-    ) internal pure returns (bool) {
-        bytes32 hashed = keccak256(abi.encode(_taskId, _schemaId, _uHash, _publicFieldsHash));
+    ) public pure returns (bool) {
+        bytes32 hashed = keccak256(abi.encode(_taskId, _schemaId, _uHash, _publicFieldsHash, _recipient));
         address validator = recoverSigner(prefixed(hashed), _validatorSignature);
 
         return (validator == _validator);
     }
 
-    function prefixed(bytes32 hash) internal pure returns (bytes32) {
+    function prefixed(bytes32 hash) private pure returns (bytes32) {
         return keccak256(abi.encodePacked("\x19Ethereum Signed Message:\n32", hash));
     }
 
-    function recoverSigner(bytes32 _hash, bytes memory _signature) internal pure returns (address signer) {
+    function recoverSigner(bytes32 _hash, bytes memory _signature) private pure returns (address signer) {
         require(_signature.length == 65, "Invalid signature length");
         bytes32 r;
         bytes32 s;

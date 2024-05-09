@@ -9,12 +9,13 @@ npx hardhat compile
 ```
 ## Test
 ```bash
-npx hardhat test 
+npx hardhat test
 ```
 
 ## Deploy
 Update the network information within the hardhat.config.js
 
 ```bash
-npx hardhat run scripts/deploy.js --network xxx
+npx hardhat run scripts/deploy.verifier.js --network xxx
+npx hardhat run scripts/deploy.attestation.js --network xxx
 ```
