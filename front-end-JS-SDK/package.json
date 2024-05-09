@@ -9,7 +9,8 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@zkpass/transgate-js-sdk": "^0.1.0",
+    "@zkpass/transgate-js-sdk": "^0.1.1",
+    "ethers": "^6.12.1",
     "next": "14.0.3",
     "react": "^18",
     "react-dom": "^18",

@@ -1,0 +1,136 @@
+[
+	{
+		"inputs": [
+			{
+				"components": [
+					{
+						"internalType": "bytes32",
+						"name": "taskId",
+						"type": "bytes32"
+					},
+					{
+						"internalType": "bytes32",
+						"name": "schemaId",
+						"type": "bytes32"
+					},
+					{
+						"internalType": "bytes32",
+						"name": "uHash",
+						"type": "bytes32"
+					},
+					{
+						"internalType": "address",
+						"name": "recipient",
+						"type": "address"
+					},
+					{
+						"internalType": "bytes32",
+						"name": "publicFieldsHash",
+						"type": "bytes32"
+					},
+					{
+						"internalType": "address",
+						"name": "validator",
+						"type": "address"
+					},
+					{
+						"internalType": "bytes",
+						"name": "allocatorSignature",
+						"type": "bytes"
+					},
+					{
+						"internalType": "bytes",
+						"name": "validatorSignature",
+						"type": "bytes"
+					}
+				],
+				"internalType": "struct Proof",
+				"name": "_proof",
+				"type": "tuple"
+			}
+		],
+		"name": "attest",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"stateMutability": "nonpayable",
+		"type": "constructor"
+	},
+	{
+		"inputs": [],
+		"name": "defaultAllocator",
+		"outputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"components": [
+					{
+						"internalType": "bytes32",
+						"name": "taskId",
+						"type": "bytes32"
+					},
+					{
+						"internalType": "bytes32",
+						"name": "schemaId",
+						"type": "bytes32"
+					},
+					{
+						"internalType": "bytes32",
+						"name": "uHash",
+						"type": "bytes32"
+					},
+					{
+						"internalType": "address",
+						"name": "recipient",
+						"type": "address"
+					},
+					{
+						"internalType": "bytes32",
+						"name": "publicFieldsHash",
+						"type": "bytes32"
+					},
+					{
+						"internalType": "address",
+						"name": "validator",
+						"type": "address"
+					},
+					{
+						"internalType": "bytes",
+						"name": "allocatorSignature",
+						"type": "bytes"
+					},
+					{
+						"internalType": "bytes",
+						"name": "validatorSignature",
+						"type": "bytes"
+					}
+				],
+				"internalType": "struct Proof",
+				"name": "_proof",
+				"type": "tuple"
+			}
+		],
+		"name": "verify",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	}
+]

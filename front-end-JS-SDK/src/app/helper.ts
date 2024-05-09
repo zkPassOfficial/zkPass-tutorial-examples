@@ -8,6 +8,7 @@ import Web3 from "web3"
  * @param publicData
  * @param signature
  * @param validatorAddress
+ * @param recipient
  * @returns
  */
 export const verifyMessageSignature = (
@@ -16,17 +17,25 @@ export const verifyMessageSignature = (
   uHash: string,
   publicFieldsHash: string,
   signature: string,
-  validatorAddress: string
+  validatorAddress: string,
+  recipient?: string
 ) => {
   const web3 = new Web3()
   
   const taskIdHex = Web3.utils.stringToHex(taskId)
   const schemaIdHex = Web3.utils.stringToHex(schemaId)
+  const types = ['bytes32', 'bytes32', 'bytes32', 'bytes32'];
+  const values = [taskIdHex, schemaIdHex, uHash, publicFieldsHash];
 
-  const encodeParams = web3.eth.abi.encodeParameters(
-    ["bytes32", "bytes32", "bytes32", "bytes32"],
-    [taskIdHex, schemaIdHex, uHash, publicFieldsHash]
-  )
+  if (recipient) {
+    types.push('address');
+    values.push(recipient);
+  }
+
+  console.log('types', types)
+  console.log('values', values)
+
+  const encodeParams = web3.eth.abi.encodeParameters(types, values);
 
   const paramsHash = Web3.utils.soliditySha3(encodeParams) as string
 
