@@ -4,8 +4,8 @@ import styles from "./page.module.css"
 import TransgateConnect from "@zkpass/transgate-js-sdk"
 import styled from "styled-components"
 import JSONPretty from "react-json-pretty"
-import { ethers } from "ethers"
-import AttestationABI from "./AttestationABI.json"
+import { Result } from "@zkpass/transgate-js-sdk/lib/types"
+import { verifySolanaMessageSignature } from "../helper"
 
 const FormGrid = styled.div`
   display: grid;
@@ -82,60 +82,42 @@ const Title = styled.h2`
 export default function Home() {
   const [appid1, setAppid1] = useState<string>("39a00e9e-7e6d-461e-9b9d-d520b355d1c0")
   const [value1, setValue1] = useState<string>("c7eab8b7d7e44b05b41b613fe548edf5")
-  const [result, setResult] = useState<any>()    
+  const [result, setResult] = useState<any>()
 
   const start = async (schemaId: string, appid: string) => {
     try {
+      if (!("phantom" in window)) {
+        return alert("Please install Phantom wallet")
+      }
+      // @ts-ignore
+      const provider = window.phantom?.solana
+
+      const resp = await provider?.connect()
+      const account = resp.publicKey.toString()
+      console.log("current account", account)
+
       const connector = new TransgateConnect(appid)
       const isAvailable = await connector.isTransgateAvailable()
       if (!isAvailable) {
         return alert("Please install zkPass TransGate")
       }
-      //@ts-ignore
-      if (window.ethereum == null) {
-        return alert("MetaMask not installed")
-      }
-      //@ts-ignore
-      const provider = new ethers.BrowserProvider(window.ethereum)
-      const signer = await provider.getSigner()
-      //get your ethereum address
-      const account = await signer.getAddress()     
 
-      const res: any = await connector.launch(schemaId, account)        
-      setResult(res)
-      
-      //Sepolia contract address
-      //You can add from https://chainlist.org/?search=11155111&testnets=true
-      const contractAddress = "0x8c18c0436A8d6ea44C87Bf5853F8D11B55CF0302"      
-      
-      const taskId = ethers.hexlify(ethers.toUtf8Bytes(res.taskId)) // to hex
-      schemaId = ethers.hexlify(ethers.toUtf8Bytes(schemaId)) // to hex
+      const res = (await connector.launchWithSolana(schemaId, account)) as Result
 
-      const chainParams = {
-        taskId,
-        schemaId,
+      const rec = res.recipient as string
+      //verify the proof result 
+      const verifyResult = verifySolanaMessageSignature({
+        taskId: res.taskId,
         uHash: res.uHash,
-        recipient: account,        
-        publicFieldsHash: res.publicFieldsHash,        
-        validator: res.validatorAddress,
-        allocatorSignature: res.allocatorSignature,
-        validatorSignature: res.validatorSignature,        
-      }      
-      console.log("chainParams", chainParams)
+        schema: schemaId,
+        validatorAddress: res.validatorAddress,
+        validatorSignature: res.validatorSignature,
+        recipient: rec,
+        publicFieldsHash: res.publicFieldsHash,
+      })
 
-      const contract = new ethers.Contract(contractAddress, AttestationABI, provider)      
-      const data = contract.interface.encodeFunctionData("attest", [chainParams])
+      alert(JSON.stringify(verifyResult))  
 
-      let transaction = {
-        to: contractAddress,
-        from: account,
-        value: 0,
-        data,
-      }
-      console.log("transaction", transaction)
-      let tx = await signer?.sendTransaction(transaction)
-      console.log("transaction hash====>", tx.hash)
-      alert('Transaction sent successfully!')
     } catch (err) {
       alert(JSON.stringify(err))
       console.log("error", err)
@@ -143,7 +125,7 @@ export default function Home() {
   }
   return (
     <main className={styles.main}>
-      <Title>zkPass Transgate JS-SDK Demo</Title>
+      <Title>zkPass Transgate JS-SDK Demo(send to solana-devnet chain)</Title>
       <FormGrid>
         <FromContainer>
           <FormItem>
