@@ -8,24 +8,22 @@ import { EVMTaskAllocator, SolanaTaskAllocator } from "./constants"
 import { SolVerifyParams } from "@zkpass/transgate-js-sdk/lib/types"
 
 export function checkTaskInfoForSolana(task: string, schema: string, validatorAddress: string, signature: string) {
-  const sig_bytes = Web3.utils.hexToBytes(signature)
+  const sig_bytes = hexToBytes(signature.slice(2));
 
-  const signatureBytes = sig_bytes.slice(0, 64)
-  const recoverId = Array.from(sig_bytes.slice(64))[0]
+  const signatureBytes = sig_bytes.slice(0, 64);
+  const recoverId = Array.from(sig_bytes.slice(64))[0];
 
   const plaintext = borsh.serialize(SolanaTask, {
-    task: task.slice(2),
-    schema: schema.slice(2),
+    task: task,
+    schema: schema,
     notary: validatorAddress,
-  })
+  });
 
-  const hash = Web3.utils.sha3(plaintext) as string
+  const plaintextHash = Buffer.from(sha3.keccak_256.digest(Buffer.from(plaintext)));
 
-  const plaintextHash = Buffer.from(Web3.utils.hexToBytes(hash))
+  const address = secp256k1.ecdsaRecover(signatureBytes, recoverId, plaintextHash, false);
 
-  const address = secp256k1.ecdsaRecover(signatureBytes, recoverId, plaintextHash, false)
-
-  return SolanaTaskAllocator === Web3.utils.sha3(address.slice(1))?.slice(2)
+  return SolanaTaskAllocator === sha3.keccak_256.hex(address.slice(1));
 }
 
 export function checkTaskInfoForEVM(task: string, schema: string, validatorAddress: string, signature: string) {
