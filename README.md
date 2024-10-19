@@ -6,6 +6,7 @@ For more information, see [here](https://zkpass.gitbook.io/zkpass).
 # Explore samples
 The directory structure is as follows:
 - front-end-JS-SDK: tutorial example for integrating zkPass Extension JS-SDK
+- front-end-O1JS-SDK: tutorial example for integrating zkPass Extension using O1JS/Mina verification
 - schemas: example for some schemas
 - contracts: example for contracts
 
