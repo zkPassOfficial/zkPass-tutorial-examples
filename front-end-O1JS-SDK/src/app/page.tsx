@@ -105,8 +105,6 @@ export default function Home() {
         const res = await connector.launch(schemaId) as Result
         resultList.push(res)
 
-        console.log({ res })
-
         const verifyResult = connector.verifyProof(
           {
             taskId: ethers.hexlify(ethers.toUtf8Bytes(res.taskId)),
