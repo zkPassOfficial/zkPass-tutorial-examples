@@ -1,0 +1,36 @@
+{
+  "name": "test-01js-sdk-project",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@solana/web3.js": "^1.92.3",
+    "@zkpass/transgate-js-sdk": "^0.2.0",
+    "borsh": "^2.0.0",
+    "buffer": "^6.0.3",
+    "ethers": "^6.12.1",
+    "js-sha3": "^0.9.3",
+    "next": "14.0.3",
+    "react": "^18",
+    "react-dom": "^18",
+    "react-json-pretty": "^2.2.0",
+    "secp256k1": "^5.0.0",
+    "styled-components": "^6.1.1",
+    "transgate-o1js-sdk": "file:../../lib",
+    "web3": "^4.2.2"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "@types/secp256k1": "^4.0.6",
+    "eslint": "^8",
+    "eslint-config-next": "14.0.3",
+    "typescript": "^5"
+  }
+}
