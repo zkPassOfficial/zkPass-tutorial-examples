@@ -1,36 +1,27 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# front-end-JS-SDK
 
-## Getting Started
+Next.js 14.0.3 app (`next` `14.0.3` in `package.json`, package name `test-sdk-project`). The home page is `src/app/page.tsx`, not `app/page.tsx`. `src/app/layout.tsx` loads Inter through `next/font/google`. `yarn.lock` is the lockfile in this directory. Scripts are `dev` (`next dev`), `build` (`next build`), `start` (`next start`), and `lint` (`next lint`).
 
-First, run the development server:
+This revision did not run `npm install`, `yarn`, or `next dev`, and it did not open a browser.
+
+## Scripts
+
+From this directory, after installing dependencies with the lockfile:
 
 ```bash
-npm run dev
-# or
 yarn dev
-# or
-pnpm dev
-# or
-bun dev
+yarn build
+yarn lint
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+`next.config.js` sets `typescript.ignoreBuildErrors` and `eslint.ignoreDuringBuilds` to true, and `images.domains` to `backend.zkpass.org`. A finished `next build` therefore does not mean TypeScript or ESLint reported a clean tree. There is no Vercel project file and no GitHub Actions workflow in this repository.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## What the pages do
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+`src/app/page.tsx` builds `TransgateConnect` from `@zkpass/transgate-js-sdk` with the app id in the form, calls `isTransgateAvailable`, and alerts `Please install zkPass TransGate` when that returns false. `Start Single Schema` calls `connector.launch` once. `Start multi-schemas` shifts two schema ids and launches them in order. Each result is passed to `verifyEVMMessageSignature` in `src/app/helper.ts`. The prefilled app id and schema id strings are React state in that file. Replace them with the app and schema registered for the demo. This page does not submit a chain transaction.
 
-## Learn More
+`src/app/evm-contract/page.tsx` also uses `TransgateConnect.launch`, then encodes `attest` with `AttestationABI.json` and `ethers.Contract` against the address `0x8c18c0436A8d6ea44C87Bf5853F8D11B55CF0302` hardcoded in that file. `src/app/sol-contract/page.tsx` calls `verifySolanaMessageSignature`. Allocator checks in `helper.ts` compare recovered signers with `EVMTaskAllocator` and `SolanaTaskAllocator` from `src/app/constants.ts`. `EVMTaskAllocator` is `0x19a567b3b212a5b35bA0E3B600FbEd5c2eE9083d`, the same address as `defaultAllocator` in `contracts/contracts/ProofVerifier.sol`. Refer to the Solana value by the constant name `SolanaTaskAllocator` in `constants.ts`. It is a 32-byte id, not an environment variable in this package.
 
-To learn more about Next.js, take a look at the following resources:
+`verifyEVMMessageSignature` and `verifySolanaMessageSignature` are local signature checks. They are not a call to `ProofVerifier.verify` and they were not executed here.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+The extension, the wallet, and any network named in the page must be present on the machine that runs the demo. This repository does not record a successful proof or a transaction hash.

@@ -1,14 +1,15 @@
-# zkPass-tutorial-examples
-Official samples for integrating with zkPass protocol.
+# zkPass tutorial examples
 
-For more information, see [here](https://zkpass.gitbook.io/zkpass).
+Samples for the zkPass Transgate flow: two Next.js front ends, JSON schema examples, a Hardhat contract package, and a Solana program. Product background is on the zkPass docs site: [zkpass.gitbook.io/zkpass](https://zkpass.gitbook.io/zkpass). This revision did not install dependencies, start a server, or send a transaction.
 
-# Explore samples
-The directory structure is as follows:
-- front-end-JS-SDK: tutorial example for integrating zkPass Extension JS-SDK
-- front-end-O1JS-SDK: tutorial example for integrating zkPass Extension using O1JS/Mina verification
-- schemas: example for some schemas
-- contracts: example for contracts
+## Layout
 
-# License
-All codes are licensed under the Apache License, Version 2.0.
+- [front-end-JS-SDK](front-end-JS-SDK/README.md) — Next.js app using `@zkpass/transgate-js-sdk` `^0.4.0`. Pages live under `src/app/`, including EVM and Solana contract demos.
+- [front-end-O1JS-SDK](front-end-O1JS-SDK/README.md) — Next.js app using `TransgateZkAppSdk` from `transgate-o1js-sdk`. The package is `file:../../lib`, which is outside this repository.
+- [schemas](schemas) — JSON examples (`binance-balance.json`, `discord-channel.json`, `discord-owner.json`, `okx-kyc.json`, `quora-account.json`, `x-account.json`). They are data files, not a program.
+- [contracts](contracts/README.md) — Solidity `ProofVerifier` and `SampleAttestation` with Hardhat tests.
+- [solana-program](solana-program/README.md) — Rust program crate `example` on `solana-program` `1.18.11`.
+
+## License
+
+Apache License, Version 2.0. See [LICENSE](LICENSE).
